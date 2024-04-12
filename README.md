@@ -30,6 +30,8 @@ Some transistors may take longer, even days.
 
 When tmp.json is saved you can run gif.ngjs script to generate gifs with charts and spice code.
 
+JFET model maker uses [ngspicejs v0.2](https://github.com/dvhx/ngspicejs) for simulation.
+
 # Measuring Vgs:Id curves
 
 ![Vgs:Id curve measurement](image/measurement1.gif)
