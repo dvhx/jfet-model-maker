@@ -1,5 +1,6 @@
 .git
 /*.gif
 /*_tmp_*.json
-/*_tmp_*.spice
+/*_tmp_*.cir
 README.md.html
+tmp.json
