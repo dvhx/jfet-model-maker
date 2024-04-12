@@ -1,0 +1,32 @@
+#!/usr/bin/env ngspicejs
+// Show all JFET charts in current directory
+// linter: ngspicejs-lint
+"use strict";
+clear_screen();
+
+// Include sources
+var check_data_vgs_id = include('../../src/check_data_vgs_id.js');
+var check_data_vds_id = include('../../src/check_data_vds_id.js');
+var load_data = include('../../src/load_data.js');
+var normalized_score = include('../../src/normalized_score.js');
+ignore(check_data_vgs_id, check_data_vds_id, normalized_score);
+
+// Load measured transistor
+var c = {};
+dir('.').filter((fn) => file_ext(fn) === '.csv').sort().forEach((fn) => {
+    var d = load_data(fn);
+    if (d.method === 'dc_jig') {
+        return;
+    }
+    c[d.chart_name] = c[d.chart_name] || chart_xy().title(d.method).width(1000).height(402);
+    c[d.chart_name].add_series(d.x, d.y, d.series_name);
+});
+
+if (c.chart1) {
+    c.chart1.min_x(-1);
+}
+
+for (var k in c) {
+    c[k].show();
+}
+

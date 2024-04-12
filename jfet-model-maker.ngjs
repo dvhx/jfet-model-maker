@@ -1,0 +1,101 @@
+#!/usr/bin/env ngspicejs
+// Create JFET model from measured data
+// linter: ngspicejs-lint
+// global: config, load_all_data, simulate, hill_climb, unstuck, check_ctrl_c
+"use strict";
+
+// Include all sources
+include('src/all.js');
+
+// load measured transistor data
+var m = load_all_data(config.transistor);
+
+// get vto and idss
+if (!m.vto) {
+    throw new Exception('Vgs:Id characteristic is required in "data/' + config.transistor + '/files.json" in order to find model!');
+}
+echo('config.transistor', config.transistor, 'vto', m.vto.toFixed(3), 'idss', m.idss.toEng(3), 'beta_ideal', m.beta_ideal.toEng(3), 'is_max', m.is_max.toEng());
+echo('score_max_vgs', m.vgs_id.score_max_vgs.toFixed(3));
+
+var initial;
+var best;
+
+if (file_exists('tmp.json') && (read('File tmp.json already exist, do you want to continue improving it? [Y/n]: ') !== 'n')) {
+    // Load existing tmp.json for further optimization
+    initial = file_read_json('tmp.json');
+} else {
+    // create initial model
+    initial = {
+        "name": config.transistor,
+        "kind": "JFET_N",
+        "level": 2,
+
+        // measured values
+        "beta": m.beta_ideal,
+        "is": m.is_max,
+        "vto": m.vto,
+
+        // initial values made from 5 different models I found
+        "delta": 3.46,
+        "ibd": "590f",
+        "lambda": 0.13,
+        "lfgam": "858.2u",
+        "lfg1": "9.7m",
+        "lfg2": "188.6u",
+        "mvst": 0.41,
+        "mxi": 0.039,
+        "n": 30,
+        "p": 3.42,
+        "q": 2.46,
+        "rd": 0.1,
+        "rs": 0.1,
+        "vbd": 60,
+        "vbi": 0.3,
+        "vst": "20.6m",
+        "xi": 150,
+        "z": 10,
+
+        // default ngspice ac values
+        "acgam": 0,
+        "cds": 0,
+        "cgd": 0,
+        "cgs": 0,
+        "fc": 0.5,
+        "hfeta": 0,
+        "hfe1": 0,
+        "hfe2": 0,
+        "hfgam": 0,
+        "hfg1": 0,
+        "hfg2": 0,
+        "taud": 0,
+        "taug": 0,
+        "xc": 0,
+
+        "af": 1,
+        "kf": 0
+    };
+
+    // show core curves (one Vgs:Id and two Vds:Id curves)
+    simulate(initial, m.core, true).show();
+}
+
+// fine tune all parameters
+while (true) {
+    // simple hill climb until gain drops below 10n
+    echo('Hill climbing ' + config.allowed_params.length + ' params, ' + m.data.length + ' curves');
+    best = hill_climb(initial, m.data, config.allowed_params, 3500, 0.1e-9, false);
+    initial = best.model;
+    check_ctrl_c(best.model, best.score);
+
+    // unstuck
+    echo('Unstucking');
+    var u = unstuck(initial, m.data, config.allowed_params, 200, 1500, 1e-9, true);
+    if (u.score < best.score) {
+        echo('Unstuck improved score from ' + best.score.toEng(3) + ' to ' + u.score.toEng(3), '(gain ', (best.score - u.score).toEng(3), ')');
+        initial = u.model;
+        check_ctrl_c(u.model, u.score);
+    } else {
+        echo('Score did not improved by unstuck');
+    }
+}
+

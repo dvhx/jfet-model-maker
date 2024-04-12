@@ -1,0 +1,158 @@
+{
+    "transistor": "MMBFJ201",
+    "speed": {
+        "min": 0.9,
+        "max": 1.1
+    },
+    "allowed_params": ["beta", "delta", "ibd", "is", "lambda", "lfg1", "lfg2", "lfgam", "mvst", "mxi", "n", "p", "q", "rd", "rs", "vbd", "vbi", "vst", "vto", "xi", "z", "b", "eg"],
+    "constraints": {
+        "n": {
+            "min": 0.001,
+            "max": 30
+        },
+        "beta": {
+            "min": 1e-6,
+            "max": 1
+        },
+        "delta": {
+            "min": 0.01,
+            "max": 50
+        },
+        "ibd": {
+            "min": 1e-15,
+            "max": 1e-3
+        },
+        "is": {
+            "min": 3e-12,
+            "max": 1e-6
+        },
+        "lambda": {
+            "min": 1e-3,
+            "max": 1
+        },
+        "lfgam": {
+            "min": 1e-6,
+            "max": 1
+        },
+        "lfg1": {
+            "min": 1e-6,
+            "max": 1
+        },
+        "lfg2": {
+            "min": 1e-9,
+            "max": 1
+        },
+        "mvst": {
+            "min": 1e-6,
+            "max": 100
+        },
+        "mxi": {
+            "min": 1e-6,
+            "max": 3000
+        },
+        "p": {
+            "min": 0.1,
+            "max": 30
+        },
+        "q": {
+            "min": 0.1,
+            "max": 30
+        },
+        "rd": {
+            "min": 0.001,
+            "max": 1000
+        },
+        "rs": {
+            "min": 0.001,
+            "max": 1000
+        },
+        "vbd": {
+            "min": 10,
+            "max": 100
+        },
+        "vbi": {
+            "min": 1e-3,
+            "max": 100
+        },
+        "vst": {
+            "min": 1e-6,
+            "max": 100
+        },
+        "vto": {
+            "min": -2,
+            "max": -0.1
+        },
+        "xi": {
+            "min": 1e-6,
+            "max": 3000
+        },
+        "z": {
+            "min": 1e-6,
+            "max": 100
+        },
+        "acgam": {
+            "min": 0,
+            "max": 999
+        },
+        "cds": {
+            "min": 0,
+            "max": 1e-3
+        },
+        "cgd": {
+            "min": 0,
+            "max": 1e-3
+        },
+        "cgs": {
+            "min": 0,
+            "max": 1e-3
+        },
+        "fc": {
+            "min": 0,
+            "max": 999
+        },
+        "hfeta": {
+            "min": 0,
+            "max": 999
+        },
+        "hfe1": {
+            "min": 0,
+            "max": 999
+        },
+        "hfe2": {
+            "min": 0,
+            "max": 999
+        },
+        "hfgam": {
+            "min": 0,
+            "max": 999
+        },
+        "hfg1": {
+            "min": 0,
+            "max": 999
+        },
+        "hfg2": {
+            "min": 0,
+            "max": 999
+        },
+        "taud": {
+            "min": 0,
+            "max": 999
+        },
+        "taug": {
+            "min": 0,
+            "max": 999
+        },
+        "xc": {
+            "min": 0,
+            "max": 999
+        },
+        "af": {
+            "min": 0,
+            "max": 999
+        },
+        "kf": {
+            "min": 0,
+            "max": 999
+        }
+    }
+}

@@ -1,0 +1,11 @@
+#!/usr/bin/env ngspicejs
+// Convert JSON to spice models
+// linter: ngspicejs-lint
+"use strict";
+
+dir('.').filter((fn) => file_ext(fn) === '.json').forEach((fn) => {
+    var m = jfet_model(file_read_json(fn));
+    var s = m.render();
+    file_write(file_ext_replace(fn, '.spice'), s);
+})
+

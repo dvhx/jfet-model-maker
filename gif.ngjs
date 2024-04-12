@@ -1,0 +1,38 @@
+#!/usr/bin/env ngspicejs
+// Show charts for tmp.json and save them as gifs
+// linter: ngspicejs-lint
+// global: load_all_data, simulate, config
+"use strict";
+
+// Load current model
+var initial = file_read_json('tmp.json');
+
+// Include all sources
+include('src/all.js');
+
+// Load measured data
+var m = load_all_data(initial.name);
+if (m.vto) {
+    echo('config.transistor', config.transistor, 'vto', m.vto.toFixed(3), 'idss', m.idss.toEng(3));
+}
+
+// simulate and show charts
+var s = simulate(initial, m.data, true);
+echo('// score', s.score.toEng(3));
+s.show();
+
+// save gifs
+var today = (new Date()).toISOString().substr(0, 19).replace(/[T:\-]/g, '_');
+beep();
+read('Press ENTER to save gifs and json, CTRL+C to exit: ');
+echo();
+s.charts.chart1.gif(m.name + '_' + today + '_chart1.gif');
+s.charts.chart2.gif(m.name + '_' + today + '_chart2.gif');
+file_write_json(m.name + '_' + today + '_tmp_' + s.score.toEng(3) + '.json', initial, 4);
+
+// save spice model
+netlist_clear();
+resistor('R1', 1, 0, 100);
+jfet_model(initial);
+file_write_netlist(m.name + '_' + today + '_tmp_' + s.score.toEng(3) + '.spice');
+exit(1);

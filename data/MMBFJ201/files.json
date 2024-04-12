@@ -1,0 +1,17 @@
+{
+    "vgs_id_0.csv": 4.0,
+    "vgd_is_0.csv": 4.0,
+
+    "vds_id_vgs_0.csv": 4.0,
+    "vds_id_vgs_1.csv": 0,
+    "vds_id_vgs_2.csv": 0,
+
+    "vsd_is_vgd_0.csv": 0,
+    "vsd_is_vgd_1.csv": 0,
+    "vsd_is_vgd_2.csv": 2.0,
+
+    "dc_jig_1.csv": 0.3,
+    "dc_jig_2.csv": 0.3,
+    "dc_jig_3.csv": 0.3,
+    "dc_jig_4.csv": 0.3
+}
