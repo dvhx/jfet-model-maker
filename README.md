@@ -23,9 +23,12 @@ And here is my model generated with jfet-model-maker:
 
 In the [data](data/) folder are few measured transistors. Each curve is in separate CSV file. 
 Measure your transistor, then in the [config.json](config.json) change transistor name to match yours.
-Run the jfet-model-maker.ngjs script and in few minutes you will have first decent model which is saved in tmp.json file.
+Run the jfet-model-maker.ngjs script and in few minutes you will have first decent model which is saved in tmp.json file. 
+Press Ctrl+C to interrupt the script and you will be asked if you want to save the tmp.json file, press "y" to save.
 You can then let it run for few hours to further improve accuracy. The above model of MMBFJ201 was made in 2 hours or so.
 Some transistors may take longer, even days.
+
+When tmp.json is saved you can run gif.ngjs script to generate gifs with charts and spice code.
 
 # Measuring Vgs:Id curves
 
