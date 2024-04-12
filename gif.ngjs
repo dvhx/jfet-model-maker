@@ -24,15 +24,13 @@ s.show();
 // save gifs
 var today = (new Date()).toISOString().substr(0, 19).replace(/[T:\-]/g, '_');
 beep();
-read('Press ENTER to save gifs and json, CTRL+C to exit: ');
+read('Press ENTER to save .gif, .json and .spice, or press CTRL+C to exit: ');
 echo();
 s.charts.chart1.gif(m.name + '_' + today + '_chart1.gif');
 s.charts.chart2.gif(m.name + '_' + today + '_chart2.gif');
 file_write_json(m.name + '_' + today + '_tmp_' + s.score.toEng(3) + '.json', initial, 4);
 
 // save spice model
-netlist_clear();
-resistor('R1', 1, 0, 100);
-jfet_model(initial);
-file_write_netlist(m.name + '_' + today + '_tmp_' + s.score.toEng(3) + '.spice');
+var sp = jfet_model(initial);
+file_write(m.name + '_' + today + '_tmp_' + s.score.toEng(3) + '.cir', sp.render());
 exit(1);
