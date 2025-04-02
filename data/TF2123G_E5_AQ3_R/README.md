@@ -2,7 +2,10 @@
 
 TF2123G-E5-AQ3-R ([datasheet](https://www.unisonic.com.tw/uploadfiles/836/part_no_pdf/TF2123.pdf), [LCSC](https://www.lcsc.com/product-detail/JFETs_UTC-Unisonic-Tech-TF2123G-E5-AQ3-R_C127046.html?s_z=n_TF2123G-E5-AQ3-R))
 is a $0.01 JFET from Unisonic Technologies (Taiwan) mainly for capacitive (electret?) microphones applications. 
-It is in extremely small and annoying SOT-723 package with E5 marking on it.
+It is in extremely small and annoying SOT-723 package with E5 marking on it:
+
+[<img src="photo.jpg">](photo.jpg)
+
 I measured it's curves and created spice model for it (ngspice, ngspicejs) which corelates very well with the measured data, here is
 comparison of real measured data (red) and simulation (green):
 
@@ -47,7 +50,10 @@ Measured and simulated results:
     Real:       Vin=0.254Vpp Vout=4.525Vpp Gain=17.8x I=326uA
     Simulation: Vin=0.254Vpp Vout=4.57Vpp  Gain=17.9x I=335uA
 
-So it is reasonable accurate.
+So it is reasonable accurate. And here is comparison with other JFETs:
+
+[<img src="../Vgs_Id.gif">](../Vgs_Id.gif)
+[<img src="../Vds_Id.gif">](../Vds_Id.gif)
 
 ### Conclusion ###
 
