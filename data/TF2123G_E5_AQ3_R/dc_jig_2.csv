@@ -1,0 +1,2 @@
+vbat,rd,rs,rg,rvoltmeter,id,vd,vs,vg,temperature,method,chart_name,series_name
+9,10.03k,511,9800,10.2M,209u,6.90,0.106,0,27.0,dc_jig,none,Rd=10k/Rs=510/Rg=10k
