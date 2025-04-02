@@ -24,6 +24,13 @@ function load_all_data(aName) {
     // find main Vgs:Id curve and largest and smallest Vds:Id
     var vgs_id = data.find((o) => o.method === 'vgs_id');
     var vds_id = data.filter((o) => o.method === 'vds_id').sort((a, b) => b.vgs - a.vgs);
+
+    // check if vds_id data have all different Vgs
+    var chk = vds_id.map(o => o.vgs);
+    if (chk.length > 0 && (chk.unique().length !== chk.length)) {
+        warn('There are ' + chk.length + ' vds_id data, but only ' + chk.unique().length + ' unique Vgs values (' + chk.join(', ') + '), usually they should all be different, this could be error!');
+    }
+
     var core = [vgs_id];
     if (vds_id.length === 1) {
         core.push(vds_id[0]);

@@ -6,7 +6,7 @@ function check_data_vds_id(aVds, aId, aVgs, aCsvFileName) {
     // Check VDS and ID data
     var prefix = 'In file "' + aCsvFileName + '" ';
     if (!Array.isArray(aVds)) {
-        throw new Exception(prefix + 'column vds/vsd must be array');
+        throw new Exception(prefix + 'column vds/vsd must be array, but is ' + typeof aVds);
     }
     if (!Array.isArray(aId)) {
         throw new Exception(prefix + 'column id/is must be array');
