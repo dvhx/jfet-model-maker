@@ -6,6 +6,10 @@
 dir('.').filter((fn) => file_ext(fn) === '.json').forEach((fn) => {
     var m = jfet_model(file_read_json(fn));
     var s = m.render();
+    s = s.split('\n');
+    s[0] += ' made by https://github.com/dvhx/jfet-model-maker';
+    s.push('');
+    s = s.join('\n');
     file_write(file_ext_replace(fn, '.spice'), s);
-})
+});
 
