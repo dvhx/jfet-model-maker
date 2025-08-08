@@ -3,23 +3,24 @@
 // linter: ngspicejs-lint
 "use strict";
 
+var dirs = ['2N5457', 'BF245A', 'J201', 'MMBFJ201', 'TF2123G_E5_AQ3_R'];
+
 var c = chart_xy().title('Vgs:Id').min_x(-1).max_x(0).max_y('3m').height(480);
-dir('.').filter(fn => file_exists(fn + "/vgs_id_0.csv")).forEach((fn) => {
+dirs.forEach((fn) => {
     var csv = file_read_csv(fn + "/vgs_id_0.csv");
-    //echo(fn, csv.length);
     var x = csv.column(0).slice(1).map(s => s.fromEng());
     var y = csv.column(1).slice(1).map(s => s.fromEng());
-    c.add_series(x, y, fn.split('/').at(-2));
+    c.add_series(x, y, fn);
 });
 c.show().gif('Vgs_Id.gif');
 
 c = chart_xy().title('Vds:Id (Vgs=0)').height(402);
-dir('.').filter(fn => file_exists(fn + "/vds_id_vgs_0.csv")).forEach((fn) => {
+dirs.forEach((fn) => {
     var csv = file_read_csv(fn + "/vds_id_vgs_0.csv");
     //echo(fn, csv.length);
     var x = csv.column(0).slice(1).map(s => s.fromEng());
     var y = csv.column(1).slice(1).map(s => s.fromEng());
-    c.add_series(x, y, fn.split('/').at(-2) + (csv[1][8] === 'Vds:Id@Vgs=0V' ? '' : ' ' + csv[1][8]));
+    c.add_series(x, y, fn + (csv[1][8] === 'Vds:Id@Vgs=0V' ? '' : ' ' + csv[1][8]));
 });
 c.show().gif('Vds_Id.gif');
 
