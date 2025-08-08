@@ -86,6 +86,12 @@ if (file_exists('tmp.json') && (read('File tmp.json already exist, do you want t
     simulate(initial, m.core, true).show();
 }
 
+// check kind mismatch
+if (config.kind !== initial.kind) {
+    error('config.kind is ' + config.kind + ' but tmp.json kind is ' + initial.kind);
+    exit(24);
+}
+
 // fine tune all parameters
 while (true) {
     // simple hill climb until gain drops below 10n
