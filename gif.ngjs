@@ -11,7 +11,7 @@ var initial = file_read_json('tmp.json');
 include('src/all.js');
 
 // Load measured data
-var m = load_all_data(initial.name);
+var m = load_all_data(initial.name, initial.kind);
 if (m.vto) {
     echo('config.transistor', config.transistor, 'vto', m.vto.toFixed(3), 'idss', m.idss.toEng(3));
 }

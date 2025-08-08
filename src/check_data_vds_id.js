@@ -2,8 +2,9 @@
 // linter: ngspicejs-lint
 "use strict";
 
-function check_data_vds_id(aVds, aId, aVgs, aCsvFileName) {
+function check_data_vds_id(aVds, aId, aVgs, aCsvFileName, aKind) {
     // Check VDS and ID data
+    Internal.assert_enum(aKind, ['JFET_N', 'JFET_P'], 'kind', 'check_data_vds_id(vds,id,vgs,csv_filename,kind)');
     var prefix = 'In file "' + aCsvFileName + '" ';
     if (!Array.isArray(aVds)) {
         throw new Exception(prefix + 'column vds/vsd must be array, but is ' + typeof aVds);
@@ -20,8 +21,11 @@ function check_data_vds_id(aVds, aId, aVgs, aCsvFileName) {
     if (aVds[0] !== 0) {
         throw new Exception(prefix + 'vds/vgd should start at 0 but starts at ' + aVds[0]);
     }
-    if (aVds.at(-1) !== 9) {
-        throw new Exception(prefix + 'vds/vsd should end at 9 but ends at ' + aVds.at(-1));
+    if (aKind === 'JFET_N' && aVds.at(-1) !== 9) {
+        throw new Exception(prefix + 'vds/vsd (for ' + aKind + ') should end at 9 but ends at ' + aVds.at(-1));
+    }
+    if (aKind === 'JFET_P' && aVds.at(-1) !== -9) {
+        throw new Exception(prefix + 'vds/vsd (for ' + aKind + ') should end at -9 but ends at ' + aVds.at(-1));
     }
     if (aId[0] !== 0) {
         throw new Exception(prefix + 'id/is should start at 0 but starts at ' + aId[0]);

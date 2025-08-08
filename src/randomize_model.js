@@ -16,6 +16,16 @@ function randomize_model(aModel, aAllowedAttributes) {
     aModel[k] = old * random_float(config.speed.min, config.speed.max);
     //echo('k', k, ':', old, '-->', aModel[k]);
 
+    // if model is symmetrical and we changed rd or rs, use the same value in the other one as well
+    if (config.symmetrical) {
+        if (k === 'rd') {
+            aModel.rs = aModel[k];
+        }
+        if (k === 'rs') {
+            aModel.rd = aModel[k];
+        }
+    }
+
     // can't be a NaN
     if (Number.isNaN(aModel[k])) {
         throw new Exception('Value is NaN for attribute ' + k + ' old=' + old);

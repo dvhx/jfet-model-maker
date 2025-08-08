@@ -3,8 +3,10 @@
 // global: load_data
 "use strict";
 
-function load_all_data(aName) {
+function load_all_data(aName, aKind) {
     // Load all measured data for one transistor sample (specified in files.json)
+    Internal.assert_arguments_length(arguments, 2, 2, 'load_all_data(name, kind)');
+    Internal.assert_enum(aKind, ['JFET_N', 'JFET_P'], 'kind', 'load_all_data(name,kind)');
     var files = file_read_json('data/' + aName + '/files.json');
     if (Array.isArray(files)) {
         throw new Exception('data/' + aName + '/files.json must contain object of csv files and their weights');
@@ -16,7 +18,7 @@ function load_all_data(aName) {
             if (!files[k]) {
                 continue;
             }
-            o = load_data('data/' + aName + '/' + k);
+            o = load_data('data/' + aName + '/' + k, aKind);
             o.score_weight = files[k];
             data.push(o);
         }
@@ -31,6 +33,7 @@ function load_all_data(aName) {
         warn('There are ' + chk.length + ' vds_id data, but only ' + chk.unique().length + ' unique Vgs values (' + chk.join(', ') + '), usually they should all be different, this could be error!');
     }
 
+    // "core curves" are vgs_id and first and last vds_id to keep charts simpler (to draw all charts use "data")
     var core = [vgs_id];
     if (vds_id.length === 1) {
         core.push(vds_id[0]);

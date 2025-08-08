@@ -28,11 +28,15 @@ function simulation_vds_id(aModelObject, aMeasuredData) {
 
     // netlist
     netlist_clear();
-    pwl('U1', 5, 0).shape([[0, 0], [0.020, 9.5]]);
+    pwl('U1', 5, 0).shape([[0, 0], [0.020, aModelObject.kind === 'JFET_N' ? 9.5 : -9.5]]);
     ammeter('A1', 5, 4);
-    resistor('R1', 4, 'd', 220);
+    resistor('R1', 4, 'd', 220); // fixme: use resistor value from measured data?
     jfet_model(o);
-    jfet_n('T1', 'd', 'g', 0, o.name); // normal
+    if (aModelObject.kind === 'JFET_N') {
+        jfet_n('T1', 'd', 'g', 0, o.name); // normal
+    } else {
+        jfet_p('T1', 'd', 'g', 0, o.name); // normal
+    }
     resistor('RV', 'd', 0, aMeasuredData.rvoltmeter); // voltmeter input resistance (measure this with second multimeter)
     battery('U2', 'g1', 0, aMeasuredData.vgs);
     resistor('R2', 'g1', 'g', 2); // 2ohm gate resistor to prevent "timestep too small" error

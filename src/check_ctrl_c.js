@@ -7,12 +7,20 @@ function check_ctrl_c(aBestModel, aBestScore) {
     if (ctrl_c_pressed()) {
         beep();
         echo();
-        if (read_char('Before exit, do you want to save current best model with score ' + aBestScore.toEng(3) + ' to tmp.json? [Y/n]: ').toLowerCase() !== 'n') {
+        if (globalThis.show_charts_on_ctrl) {
+            globalThis.show_charts_on_ctrl();
+        }
+
+        var s = read_char('Before exit, do you want to save current best model with score ' + aBestScore.toEng(3) + ' to tmp.json? ([Y]es/[n]o/[c]ontinue): ').toLowerCase();
+        if (s === 'y' || s === '') {
             echo();
             file_write_json('tmp.json', aBestModel, 4);
             echo('\nSaved tmp.json');
         }
-        exit(1);
+        if (s === 'y' || s === 'n') {
+            exit(1);
+        }
+        ctrl_c_reset();
     }
 }
 

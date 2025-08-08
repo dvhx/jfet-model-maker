@@ -2,11 +2,18 @@
 // linter: ngspicejs-lint
 "use strict";
 
-// suppress errors (we are simulating random junk, it will be crashing all the time)
-Internal.ngspice_process_log.hide_errors = true;
-
 // main config file
 globalThis.config = file_read_json('config.json');
+
+// There was a bug in ngspicejs jfet_p() prior to version 6
+if ((config.kind !== 'JFET_N') && (ngspicejs_version() < 6)) {
+    error("To make P-channel JFET models you need to upgrade your ngspicejs from version " + ngspicejs_version() + " to 6 or higher");
+    exit(1);
+}
+if (aKind !== 'JFET_P' && !config.symmetrical) {
+    error("Only symmetrical P-channel JFET are supported, use symmetrical = true in config.json");
+    exit(1);
+}
 
 // src
 globalThis.load_data = include('src/load_data.js');
@@ -31,4 +38,16 @@ globalThis.unstuck = include('src/unstuck.js');
 Internal.JfetModel.prototype.validate = function () {
     return;
 };
+
+// check for correct min-max order
+for (var k in globalThis.config.constraints) {
+    var mm = globalThis.config.constraints[k];
+    if (mm.min > mm.max) {
+        error('config.constraint.' + k + ' min and max are swapped! min=' + mm.min + ' max=' + mm.max);
+        exit(24);
+    }
+}
+
+// suppress errors (we are simulating random junk, it will be crashing all the time)
+Internal.ngspice_process_log.hide_errors = true;
 

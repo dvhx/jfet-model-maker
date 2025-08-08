@@ -7,15 +7,24 @@ function simulation_dc_jig(aModelObject, aMeasuredData) {
     // Simulate transistor model using DC jig with Rd to Vbat, Rs and Rg to ground
 
     // check measured data for obvious errors
-    Internal.assert_number(aMeasuredData.vbat, 'measured_data.vbat', 'simulation_dc_jig', 1, 100);
+    if (aModelObject.kind === 'JFET_N' && aMeasuredData.vbat < 0) {
+        Internal.assert_number(aMeasuredData.vbat, 'measured_data.vbat', 'simulation_dc_jig', 1, 100);
+        Internal.assert_number(aMeasuredData.id, 'measured_data.id', 'simulation_dc_jig', 1e-9, 10);
+        Internal.assert_number(aMeasuredData.vd, 'measured_data.vd', 'simulation_dc_jig', 0.001, aMeasuredData.vbat);
+        Internal.assert_number(aMeasuredData.vs, 'measured_data.vs', 'simulation_dc_jig', 0, aMeasuredData.vbat);
+        Internal.assert_number(aMeasuredData.vg, 'measured_data.vg', 'simulation_dc_jig', 0, aMeasuredData.vbat);
+    }
+    if (aModelObject.kind === 'JFET_P' && aMeasuredData.vbat > 0) {
+        Internal.assert_number(aMeasuredData.vbat, 'measured_data.vbat', 'simulation_dc_jig', -100, -1);
+        Internal.assert_number(aMeasuredData.id, 'measured_data.id', 'simulation_dc_jig', -10, -1e-9);
+        Internal.assert_number(aMeasuredData.vd, 'measured_data.vd', 'simulation_dc_jig', aMeasuredData.vbat, -0.001);
+        Internal.assert_number(aMeasuredData.vs, 'measured_data.vs', 'simulation_dc_jig', aMeasuredData.vbat, 0);
+        Internal.assert_number(aMeasuredData.vg, 'measured_data.vg', 'simulation_dc_jig', aMeasuredData.vbat, 0);
+    }
     Internal.assert_number(aMeasuredData.rd, 'measured_data.rd', 'simulation_dc_jig', 1, 100e6);
     Internal.assert_number(aMeasuredData.rs, 'measured_data.rs', 'simulation_dc_jig', 1, 100e6);
     Internal.assert_number(aMeasuredData.rg, 'measured_data.rg', 'simulation_dc_jig', 1, 1000e6);
     Internal.assert_number(aMeasuredData.rvoltmeter, 'measured_data.rvoltmeter', 'simulation_dc_jig', 1, 10000e6);
-    Internal.assert_number(aMeasuredData.id, 'measured_data.id', 'simulation_dc_jig', 1e-9, 10);
-    Internal.assert_number(aMeasuredData.vd, 'measured_data.vd', 'simulation_dc_jig', 0.001, aMeasuredData.vbat);
-    Internal.assert_number(aMeasuredData.vs, 'measured_data.vs', 'simulation_dc_jig', 0, aMeasuredData.vbat);
-    Internal.assert_number(aMeasuredData.vg, 'measured_data.vg', 'simulation_dc_jig', 0, aMeasuredData.vbat);
     Internal.assert_number(aMeasuredData.temperature, 'measured_data.temperature', 'simulation_dc_jig', 0, 50);
     Internal.assert_number(aMeasuredData.temperature, 'measured_data.temperature', 'simulation_dc_jig', 0, 50);
 

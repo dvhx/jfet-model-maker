@@ -1,5 +1,7 @@
 {
     "transistor": "MMBFJ201",
+    "kind": "JFET_N",
+    "symmetrical": true,
     "speed": {
         "min": 0.9,
         "max": 1.1

@@ -21,6 +21,9 @@ function simulation_vgs_id(aModelObject, aMeasuredData) {
     if (!Array.isArray(aMeasuredData.id)) {
         throw new Exception('Measured data must contain id (array)');
     }
+    if (!['JFET_N', 'JFET_P'].includes(config.kind)) {
+        throw new Exception('Model object kind is ' + aModelObject.kind + ' but allowed are only JFET_N or JFET_P');
+    }
 
     // clone model
     var o = JSON.parse(JSON.stringify(aModelObject));
@@ -28,11 +31,15 @@ function simulation_vgs_id(aModelObject, aMeasuredData) {
 
     // Id vs Vgs (measures Vto and Idss)
     netlist_clear();
-    battery('U1', 5, 0, 9).rs(10);
+    battery('U1', 5, 0, aModelObject.kind === 'JFET_N' ? 9 : -9).rs(10);
     ammeter('A1', 5, 4);
     resistor('R1', 4, 3, 220);
     jfet_model(o);
-    jfet_n('T1', 3, 'g', 0, o.name); // normal
+    if (aModelObject.kind === 'JFET_N') {
+        jfet_n('T1', 3, 'g', 0, o.name); // normal
+    } else {
+        jfet_p('T1', 3, 'g', 0, o.name); // normal
+    }
     pwl('U2', 'g1', 0).shape([[0, aMeasuredData.vgs[0]], [0.020, aMeasuredData.vgs.at(-1)]]);
     resistor('R2', 'g1', 'g', 2); // 2ohm gate resistor to prevent "timestep too small" error
     resistor('R3', 'g', 0, '1M'); // protection 1M gate to ground

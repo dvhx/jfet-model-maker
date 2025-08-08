@@ -76,7 +76,7 @@ function simulate(aModelObject, aMeasuredData, aMakeCharts) {
         }
         // add function to show all charts
         ret.show = function () {
-            if (c.chart1) {
+            if (c.chart1 && (aMeasuredData.kind === 'JFET_N')) {
                 // chart 1 doesn't need curve left of vto
                 c.chart1.min_x(round_to(aMeasuredData.find(a => a.vto).vto, 1));
             }

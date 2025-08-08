@@ -8,7 +8,7 @@
 include('src/all.js');
 
 // load measured transistor data
-var m = load_all_data(config.transistor);
+var m = load_all_data(config.transistor, config.kind);
 
 // get vto and idss
 if (!m.vto) {
@@ -19,6 +19,13 @@ echo('score_max_vgs', m.vgs_id.score_max_vgs.toFixed(3));
 
 var initial;
 var best;
+
+globalThis.show_charts_on_ctrl = function () {
+    // Show charts on Ctrl+C
+    echo('On Ctrl+C rendering all charts for current best model:');
+    var r = simulate(initial, m.core, true).show();
+    echo('  (score ', r.score.toEng(3), ')');
+};
 
 if (file_exists('tmp.json') && (read('File tmp.json already exist, do you want to continue improving it? [Y/n]: ') !== 'n')) {
     // Load existing tmp.json for further optimization
