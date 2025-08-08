@@ -10,7 +10,7 @@ if ((config.kind !== 'JFET_N') && (ngspicejs_version() < 6)) {
     error("To make P-channel JFET models you need to upgrade your ngspicejs from version " + ngspicejs_version() + " to 6 or higher");
     exit(1);
 }
-if (aKind !== 'JFET_P' && !config.symmetrical) {
+if (config.kind !== 'JFET_P' && !config.symmetrical) {
     error("Only symmetrical P-channel JFET are supported, use symmetrical = true in config.json");
     exit(1);
 }
