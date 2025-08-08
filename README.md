@@ -98,6 +98,13 @@ I don't have gear to accurately measure AC parameters so I left them at their de
 Once the model is done you can use for example datasheet values for capacitances.
 Or you can make some new simulation methods and calculate score from real and simulated values.
 
+# P-channel JFETs
+
+- P-channel JFETs are supported since jfet-model-maker version 0.2
+- It requires ngspicejs version 6 or later
+- Schematic is the same as N-channel but uses negative battery voltage (e.g. -9V) and positive Vgs
+- sample data and model is provided for MMBFJ177LT1G
+
 # Support
 
 You can support development on [Patreon](https://www.patreon.com/DusanHalicky) or you can hire me via [Upwork](https://www.upwork.com/freelancers/~013b4c3d6e772fdb01)
