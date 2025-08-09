@@ -53,11 +53,11 @@ function check_data_vgs_id(aVgs, aId, aCsvFileName, aKind) {
     if (aKind === 'JFET_P' && idss > -1e-6) {
         warn(prefix + 'calculated IDSS has unusual value ' + idss + ' (for ' + aKind + ')');
     }
-    echo('vto', vto);
-    echo('idss', idss.toEng(3));
+    //echo('vto', vto);
+    //echo('idss', idss.toEng(3));
     // calculate ideal beta
     beta_ideal = idss / (vto * vto);
-    echo('beta_ideal', beta_ideal.toEng(3));
+    //echo('beta_ideal', beta_ideal.toEng(3));
     // calculate smallest non-zero IS
     if (aKind === 'JFET_N') {
         is_max = aId.filter((i) => i > 0)[0];
@@ -65,7 +65,7 @@ function check_data_vgs_id(aVgs, aId, aCsvFileName, aKind) {
     if (aKind === 'JFET_P') {
         is_max = aId.filter((i) => i < 0).sortNumerically()[0];
     }
-    echo('is_max', is_max);
+    //echo('is_max', is_max);
     if (is_max > 1e-6) {
         warn(prefix + 'non-zero drain current starts at ' + is_max + ' it should start at 1uA (or less) for optimal accuracy');
     }
