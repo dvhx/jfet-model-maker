@@ -14,7 +14,7 @@ ignore(check_data_vgs_id, check_data_vds_id, normalized_score);
 // Load measured transistor
 var c = {};
 dir('.').filter((fn) => file_ext(fn) === '.csv').sort().forEach((fn) => {
-    var d = load_data(fn);
+    var d = load_data(fn, 'JFET_N');
     if (d.method === 'dc_jig') {
         return;
     }
